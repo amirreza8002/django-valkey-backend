@@ -25,9 +25,11 @@ from django.test import (
     override_settings,
 )
 
+from valkey.exceptions import ResponseError
+
 from .models import Poll, expensive_calculation
 
-from valkey_backend.backend.backend import ValkeyCacheClient
+from django_valkey_backend.backend.backend import ValkeyCacheClient
 
 
 def f():
@@ -41,7 +43,7 @@ class C:
 
 class Unpicklable:
     def __getstate__(self):
-        return pickle.PickleError
+        raise pickle.PickleError()
 
 
 def empty_response(request):
@@ -92,7 +94,7 @@ class BaseCacheTests:
 
     # Some clients raise custom exceptions when .incr() or .decr() are called
     # with a non-integer value.
-    incr_decr_type_error = TypeError
+    incr_decr_type_error = ResponseError
 
     def tearDown(self):
         cache.clear()
@@ -929,22 +931,21 @@ class BaseCacheTests:
             self.assertEqual(cache.get_or_set("key", "default"), "default")
 
 
-class PicklingSideEffect:
-    def __init__(self, cache):
-        self.cache = cache
-        self.locked = False
 
-    def __getstate__(self):
-        self.locked = self.cache._lock.locked()
-        return {}
 
+CACHES = {
+    "default": {
+        "BACKEND": "django_valkey_backend.backend.backend.ValkeyCache",
+        "LOCATION": "valkey://127.0.0.1:6379"
+    },
+}
 
 configured_caches = {}
-for _cache_params in settings.CACHES.values():
+for _cache_params in CACHES.values():
     configured_caches[_cache_params["BACKEND"]] = _cache_params
 
 
-ValkeyCache_params = configured_caches.get("valkey_backend.backend.ValkeyCache")
+ValkeyCache_params = configured_caches.get("django_valkey_backend.backend.backend.ValkeyCache")
 valkey_excluded_caches = {"cull", "zero_cull"}
 
 
@@ -969,7 +970,7 @@ class ValkeyCacheTests(BaseCacheTests, TestCase):
     def test_incr_write_connection(self):
         cache.set("number", 42)
         with mock.patch(
-            "valkey_backend.backend.backend.ValkeyCacheClient.get_client"
+            "django_valkey_backend.backend.backend.ValkeyCacheClient.get_client"
         ) as mocked_get_client:
             cache.incr("number")
             self.assertEqual(mocked_get_client.call_args.kwargs, {"write": True})
