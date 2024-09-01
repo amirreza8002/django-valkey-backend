@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "django-valkey-backend"
+name = "django_valkey_backend"
 version = "0.0.1"
 description = "a backend for valkey database, based on django's redis backend"
 authors = ["amirreza <amir.rsf1380@gmail.com>"]
