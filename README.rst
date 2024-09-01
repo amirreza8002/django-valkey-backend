@@ -21,7 +21,7 @@ Requirements
 .. _Python: https://www.python.org/downloads/
 .. _Django: https://www.djangoproject.com/download/
 .. _valkey-py: https://pypi.org/project/valkey/
-.. _Redis server: https://valkey.io/download/
+.. _Valkey server: https://valkey.io/download/
 
 User guide
 ----------
