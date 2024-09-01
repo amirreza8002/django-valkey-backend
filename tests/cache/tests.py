@@ -29,7 +29,7 @@ from valkey.exceptions import ResponseError
 
 from .models import Poll, expensive_calculation
 
-from django_valkey_backend.backend.backend import ValkeyCacheClient
+from django_valkey.backend.backend import ValkeyCacheClient
 
 
 def f():
