@@ -16,7 +16,7 @@ Requirements
 - `Python`_ 3.10+
 - `Django`_ 5.1+ (it probably works with lower versions as well, just haven't test it)
 - `valkey-py`_ 6.0.0+
-- `Valkey server`_ 2.8+ (again, probably works with ower versions too)
+- `Valkey server`_ 2.8+ (again, probably works with lower versions too)
 
 .. _Python: https://www.python.org/downloads/
 .. _Django: https://www.djangoproject.com/download/
