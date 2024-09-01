@@ -1,1 +1,1 @@
-from .backend.backend import ValkeyCache  # noqa: F401
+from .backend import ValkeyCache  # noqa: F401
