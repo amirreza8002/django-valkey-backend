@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "django-valkey-backend"
+version = "0.1.0"
+description = ""
+authors = ["amirreza <amir.rsf1380@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.1"
+valkey = {extras = ["libvalkey"], version = "^6.0.0"}
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.8.0"
+ruff = "^0.6.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
