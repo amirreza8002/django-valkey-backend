@@ -931,12 +931,10 @@ class BaseCacheTests:
             self.assertEqual(cache.get_or_set("key", "default"), "default")
 
 
-
-
 CACHES = {
     "default": {
         "BACKEND": "django_valkey_backend.backend.backend.ValkeyCache",
-        "LOCATION": "valkey://127.0.0.1:6379"
+        "LOCATION": "valkey://127.0.0.1:6379",
     },
 }
 
@@ -945,7 +943,9 @@ for _cache_params in CACHES.values():
     configured_caches[_cache_params["BACKEND"]] = _cache_params
 
 
-ValkeyCache_params = configured_caches.get("django_valkey_backend.backend.backend.ValkeyCache")
+ValkeyCache_params = configured_caches.get(
+    "django_valkey_backend.backend.backend.ValkeyCache"
+)
 valkey_excluded_caches = {"cull", "zero_cull"}
 
 
